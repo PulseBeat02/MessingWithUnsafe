@@ -23,7 +23,7 @@ public class WindowHandle {
     }
   }
 
-  public static void main(final String[] args) throws Exception {
+  public static void main(final String[] args) throws NoSuchFieldException {
 
     final JFrame frame = new JFrame();
     frame.setVisible(true);
@@ -66,11 +66,11 @@ public class WindowHandle {
     return System.getProperty("os.name").toLowerCase().contains("win");
   }
 
-  public static long getWindowHandle(final Object componentInheritor) throws Exception {
+  public static long getWindowHandle(final Component component) throws NoSuchFieldException {
     final Class<Component> clazz = Component.class;
     final Field field = clazz.getDeclaredField("peer");
     final long offset = UNSAFE.objectFieldOffset(field);
-    final Object peer = UNSAFE.getObject(componentInheritor, offset);
+    final Object peer = UNSAFE.getObject(component, offset);
     return getWindowHandle0(peer);
   }
 }
